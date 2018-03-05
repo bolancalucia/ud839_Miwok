@@ -13,4 +13,12 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
+
+    <style name="WordStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/spacing0</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
 </resources>
