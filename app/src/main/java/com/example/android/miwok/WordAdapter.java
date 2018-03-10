@@ -2,6 +2,7 @@ package com.example.android.miwok;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -41,7 +42,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         ImageView miwokImageView = listItemView.findViewById(R.id.miwok_image_view);
         if(currentWord.hasImage())
-            miwokImageView.setImageResource(currentWord.getImageResourceID());
+            miwokImageView.setImageResource(currentWord.getImageResourceId());
         else {
             miwokImageView.setVisibility(View.GONE);
         }
