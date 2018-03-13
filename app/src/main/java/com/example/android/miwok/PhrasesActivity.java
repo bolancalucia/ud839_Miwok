@@ -1,21 +1,32 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.android.miwok;
-
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class PhrasesFragment extends Fragment {
+public class PhrasesActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
     private AudioManager audioManager;
@@ -43,15 +54,12 @@ public class PhrasesFragment extends Fragment {
         }
     };
 
-    public PhrasesFragment() {
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.word_list ,container,false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.word_list);
 
-        audioManager = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         ArrayList<Word> words = new ArrayList<>();
         words.add(new Word("Where are you going?","minto wuksus", R.raw.phrase_where_are_you_going));
@@ -65,8 +73,8 @@ public class PhrasesFragment extends Fragment {
         words.add(new Word("Let's go.","yoowutis", R.raw.phrase_lets_go));
         words.add(new Word("Come here.","әnni'nem", R.raw.phrase_come_here));
 
-        WordAdapter wordAdapter = new WordAdapter(getActivity(), words, R.color.category_phrases);
-        final ListView listView =rootView.findViewById(R.id.list);
+        WordAdapter wordAdapter = new WordAdapter(this, words, R.color.category_phrases);
+        final ListView listView = findViewById(R.id.list);
         listView.setAdapter(wordAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,14 +84,12 @@ public class PhrasesFragment extends Fragment {
                 releaseMediaPlayer();
                 int result = audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    mediaPlayer = MediaPlayer.create(getActivity(), clickedItem.getAudioResourceId());
+                    mediaPlayer = MediaPlayer.create(PhrasesActivity.this, clickedItem.getAudioResourceId());
                     mediaPlayer.start();
                     mediaPlayer.setOnCompletionListener(completionListener);
                 }
             }
         });
-
-        return  rootView;
     }
 
     private void releaseMediaPlayer() {
@@ -92,5 +98,11 @@ public class PhrasesFragment extends Fragment {
         }
         mediaPlayer = null;
         audioManager.abandonAudioFocus(audioFocusChangeListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
     }
 }

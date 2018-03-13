@@ -15,10 +15,12 @@
  */
 package com.example.android.miwok;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.design.widget.TabLayout;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,12 +29,48 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        CategoryAdapter adapter = new CategoryAdapter(getSupportFragmentManager(),this);
-        viewPager.setAdapter(adapter);
+        final TextView numbers = findViewById(R.id.numbers);
+        if (numbers != null) {
+            numbers.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent numbersIntent = new Intent(MainActivity.this, NumbersActivity.class);
+                    startActivity(numbersIntent);
+                }
+            });
+        }
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        TextView family = findViewById(R.id.family);
+        if (family != null) {
+            family.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent familyIntent = new Intent(MainActivity.this, FamilyActivity.class);
+                    startActivity(familyIntent);
+                }
+            });
+        }
 
+        TextView colors = findViewById(R.id.colors);
+        if (colors != null) {
+            colors.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent colorsIntent = new Intent(MainActivity.this, ColorsActivity.class);
+                    startActivity(colorsIntent);
+                }
+            });
+        }
+
+        TextView phrases = findViewById(R.id.phrases);
+        if (phrases != null) {
+            phrases.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent phrasesIntent = new Intent(MainActivity.this, PhrasesActivity.class);
+                    startActivity(phrasesIntent);
+                }
+            });
+        }
     }
 }
